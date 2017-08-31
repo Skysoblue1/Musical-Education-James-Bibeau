@@ -1,0 +1,15 @@
+@charset "ISO-8859-1";
+#block {
+	font-family: arial;
+	font-size: 30pt;
+	border-width: 4px 4px 4px 4px;
+	border-style: solid;
+	border-color: #0088dd;
+	padding: 50px 50px 50px 50px;
+}
+
+
+hl { 
+	font-family: arial;
+	font-size: 36pt;
+}
