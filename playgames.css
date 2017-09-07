@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+body{
+	background-color:#C3FDB8
+}
+div{
+	width: 150px;
+	float: left;
+}
+hr.vertical{
+	float:100%;
+	width: 1;
+	border: 1px solid black;
+	
+}
