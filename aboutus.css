@@ -8,8 +8,8 @@ body{
 	
 	width:50px;
 	margin-top:50px;
-	height:50px;
-	float: right;
+	height:10px;
+	float: left;
 	
 	
 }
@@ -40,20 +40,22 @@ h1{
 }
 #e{
 	float:left;
-	width:50px;
+	width:300px;
 	border-top: solid #75888C;
 	background-color:#C3FDB8;
+	margin-top:15px;
 
 }
 #bottomLine{
 	clear:right;
+	clear:left;
 }
 
 #content{
 	height:400px;
 	width: 700px;
-	float: right;
-	margin-right:300px;
+	float: left;
+	
 	font-size:16px;
 	border-left: solid #75888C;
 	border-right: solid #75888C;
@@ -88,21 +90,20 @@ hr{
 clear:left;
 }
 
-p{
-	width: 700px;
-	float: right;
-	margin-right:400px;
-	font-size:16px;
-	border-left: solid #cc1010;
-	padding: 50px;
-}
+
 #navigation{
-	margin-left:50px;
-	width :50px;
+	height:400px;
+	margin-top:15px;
+	margin-left:15px;
+	width :212px;
+	border-top: solid #75888C;
 	float: left;
 	clear:left;
-  	
+	background-color:#C3FDB8;  	
 }
+	
+  	
+
 
 ul {
      float: left;
