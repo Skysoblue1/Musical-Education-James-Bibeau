@@ -1,15 +1,24 @@
-@charset "ISO-8859-1";
-#block {
-	font-family: arial;
-	font-size: 30pt;
-	border-width: 4px 4px 4px 4px;
+
+div{
+	
+	width:600px;
+	
+	margin-left:400px;
 	border-style: solid;
 	border-color: #0088dd;
-	padding: 50px 50px 50px 50px;
+	border-radius: 25px;
+	padding:4px;
 }
 
 
-hl { 
+p { 
 	font-family: arial;
-	font-size: 36pt;
+	font-size: 40pt;
+	margin-left:420px;
+	
+}
+a{
+	line-height: 3em;
+	font-size:25px;
+	padding:20px;
 }
