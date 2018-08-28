@@ -1,14 +1,134 @@
 @charset "ISO-8859-1";
 body{
-	background-color:#C3FDB8
+background-color:#C3FDB8;	
 }
-div{
-	width: 150px;
+
+#signin{
+
+	background-color:#C3FDB8;
+	width:50px;
+	margin-top:50px;
+	height:10px;
 	float: left;
-}
-hr.vertical{
-	float:100%;
-	width: 1;
-	border: 1px solid black;
+	
 	
 }
+#hone{
+	padding-left:400px;
+	
+        width:800px;
+	margin-bottom:0px;
+	
+ 	float: left;
+	font-size:42px;
+	
+	background-color:#ffffff:
+	font-color:#7D1B7E;
+	
+}
+#topLine{
+	clear:left; 
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+ 
+
+}
+#e{	background-color:#C3FDB8;
+	float:left;
+	width:300px;
+	border-top: solid #75888C;
+	background-color:#C3FDB8;
+	margin-top:15px;
+
+}
+#bottomLine{background-color:#C3FDB8;
+	clear:right;
+	clear:left;
+}
+
+#content{margin-top:15px;
+	height:400px;
+	width: 700px;
+	float: left;
+	
+	
+	font-size:16px;
+	border-left: solid #75888C;
+	border-right: solid #75888C;
+	border-top: solid #75888C;
+	padding: 50px;
+	background-image:url("Green Lace.png");
+	
+}
+#navigation{
+	height:400px;
+	margin-top:15px;
+	margin-left:15px;
+	width :212px;
+	border-top: solid #75888C;
+	float: left;
+	clear:left;
+	background-color:#C3FDB8;  	
+}
+	
+	
+
+h1{
+        width:600px;
+	margin-left:500px;
+	margin-bottom:0px;
+	margin-top:0px;
+ 	float: left;
+	font-size:42px;
+	
+}
+hr{
+clear:left;
+}
+
+
+#navigation{
+	height:400px;
+	margin-top:15px;
+	margin-left:15px;
+	width :212px;
+	border-top: solid #75888C;
+	float: left;
+	clear:left;
+	background-color:#C3FDB8;  	
+}
+	
+  	
+
+
+ul {
+     float: left;
+     list-style-type: none;
+     margin: 0;
+     
+      padding:4px;
+} 
+
+li  {
+
+     
+	font-size:20px;
+}
+ 
+a{	
+line-height: 2em;
+padding: 0px 0px 0px 0px;
+
+}
+ 
+
+li a {
+	padding:4px
+     display: block;
+	font-size:25px;
+} 
+

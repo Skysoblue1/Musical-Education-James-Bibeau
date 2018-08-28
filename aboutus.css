@@ -9,24 +9,27 @@ body{
 	width:50px;
 	margin-top:50px;
 	height:10px;
-	float: left;
+	float:left;
+	background-color:red;
 	
 	
 }
+
+
 h1{
-	
+
 	padding:10px;
-        width:600px;
+        width:500px;
+
 	margin-left:500px;
 	margin-bottom:0px;
 	margin-top:0px;
- 	float: left;
+ 	float:left;
 	font-size:42px;
-	
-	background-color:#ffffff:
+	background-color:red;
 	font-color:#7D1B7E;
-	
 }
+
 #topLine{
 	clear:left; 
     display: block;
@@ -35,7 +38,7 @@ h1{
     border-top: 1px solid #ccc;
     margin: 1em 0;
     padding: 0;
- 
+    background-color:red;
 
 }
 #e{
@@ -76,16 +79,6 @@ h1{
 }
 	
 	
-
-h1{
-        width:600px;
-	margin-left:500px;
-	margin-bottom:0px;
-	margin-top:0px;
- 	float: left;
-	font-size:42px;
-	
-}
 hr{
 clear:left;
 }
