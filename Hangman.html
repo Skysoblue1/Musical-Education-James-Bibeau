@@ -3,131 +3,313 @@
 <head>
     <script src="phaser1.js"></script>
 
-    
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkaUpgh9idin25SJLG80F-WJ_80jT6LFw",
+            authDomain: "musical-education-db-sj.firebaseapp.com",
+            databaseURL: "https://musical-education-db-sj.firebaseio.com",
+            projectId: "musical-education-db-sj",
+            storageBucket: "musical-education-db-sj.appspot.com",
+            messagingSenderId: "1091945993717"
+        };
+        firebase.initializeApp(config);
+    </script>
 </head>
 <body>
     <script>
+
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', {preload:preload, create: create,update: update });
+    game.backgroundColor
+
+    var word = "cresendo";
+    var correct = [];
+    var bmd;
+    var guesses = []
+
+    function preload() {
+    game.load.spritesheet('pic', 'assets/MainChar/musicAnimation.png', 256.26, 260);
+
+    game.load.spritesheet('creature', 'assets/CreatureA.png', 285, 260 );
+    game.load.spritesheet('hang', 'assets/hangman.png', 161, 181);
+    game.load.spritesheet('eaten', 'assets/eat.png', 161, 181);
+
+
+
+    //  game.load.image('pic', 'assets/MusicChar.png');
+    game.load.image('border', 'assets/border.png');
+    game.load.image('drum', 'assets/Drum.png');
+    game.load.image('musicl', 'assets/MusicLine.png');
+    game.load.image('Hang1', 'assets/hangman1.png');
+    //  game.load.image('Hang', 'assets/hangman.png');
+    }
+    var creature;
+    var hang;
+        //get info form data base
+        var ref = firebase.database().ref('vocab');
+        ref.orderByChild("word").on("child_added", function (snapshot) {
+            console.log(snapshot.key + " was " + snapshot.val().height + " meters tall");
+        });
+
+    function create() {
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    var CopyWrite = game.add.text(500, 100, "(c) 2018 Dianna Bibeau and Skyler James All Rights Reserved", {
+    font: "15px Arial",
+    fill: "#000000"
+    })
+
+    game.stage.backgroundColor = "#FFFFFF";
+
+    //creating spirtes
+    var border = game.add.sprite(0, 0, 'border');
+    var drump = game.add.sprite(540, 400, 'drum');
+    var image = game.add.sprite(600, 280, 'pic');
+    var Line = game.add.sprite(300, 300, 'musicl');
+    var hangO = game.add.sprite(100, 150, 'Hang1');
+    hang = game.add.sprite(100, 120, 'hang');
+
+    creature = game.add.sprite(400, 300, 'creature');
+
+    //adding physics to sprites
+    game.physics.enable(hang, Phaser.Physics.ARCADE);
+    game.physics.enable(creature, Phaser.Physics.ARCADE);
+
+    //changing size of image
+    image.scale.setTo(0.7, 0.7);
+    hangO.scale.setTo(0.4, 0.4);
+    hang.scale.setTo(0.5, 0.5);
+    border.scale.setTo(0.8, 0.8);
+    creature.scale.setTo(0.4, 0.4);
+
+    //main character animation
+    image.frame = 6;
+
+    var blink = image.animations.add('blink');
+
+    blink.enableUpdate = true;
+    blink.onUpdate.add(onUpdate, this);
+
+    image.animations.play('blink', 3, true);
+
+    //hangman blink
+    //  hang.frame = 7;
+    var blinkTwo = hang.animations.add('blinkTwo', [0, 1, 2, 3, 4, 5]);
+
+    blinkTwo.enableUpdate = true;
+    blinkTwo.onUpdate.add(onUpdate, this);
+
+    hang.animations.play('blinkTwo', 3, true);
+
+
+
+    //creature animation
+    var eat = creature.animations.add('eat');
+
+    eat.enableUpdate = true;
+    eat.onUpdate.add(onUpdate, this);
+
+    creature.animations.play('eat', 3, true);
+
+
+    //  Here we'll create a simple array where each letter of the word to enter represents one element:
+    for (var i = 0; i < word.length; i++) {
+    correct[word[i]] = false;
+    }
+
+    //  This is our BitmapData onto which we'll draw the word being entered
+    bmd = game.make.bitmapData(800, 200);
+    bmd.context.font = '60px Arial';
+    bmd.context.fillStyle = '#ffffff';
+    bmd.context.fillText(word, 64, 64);
+    bmd.addToWorld(90,400);
+
+
+    //  Capture all key presses
+    game.input.keyboard.addCallbacks(this, null, null, keyPress);
+
+    }
+    var wordCount = 0;
+    var count = 0;
+    var postion = 0;
+
+    function keyPress(char) {
+
+    //  Clear the BMD
+    bmd.cls();
+
+    //  Set the x value we'll start drawing the text from
+    var x = 64;
+
+    if (!guesses.includes(char)) {
+    guesses.push(char);
+
+    }
+    for (var j = 0; j < guesses.length; j++){
+    //var s = guesses.sort();
+
+    var outPut = game.add.text(90 + (j * 12), 500 , guesses[j], {
+    font: "15px Arial",
+    fill: "#ff0044"
+    })
+    }
+    if(!word.includes(char)) {
+    count++;
+
+    }
+    if (count > 5) {
+
+
+
+    console.log(count);
+    text = game.add.text(game.world.centerX, game.world.centerY, "Nice Try", {
+    font: "15px Arial",
+    fill: "#ff0044",
+    align: "center"
+    })
+
+
+
+    }
+    if (wordCount == word.length-1) {
+    var win = game.add.text(500, 300, "you win", {
+    font: "15px Arial",
+    fill: "#ff0044"})
+    }
+
+
+    //  Loop through each letter of the word being entered and check them against the key that was pressed
+    for (var i = 0; i < word.length ; i++) {
+    var letter = word.charAt(i);
+
+
+
+
+
+
+
+    //  If they pressed one of the letters in the word, flag it as correct
+
+    if (count > 5) {
+    correct[letter] = true
+    }
+    if (char === letter) {
+    wordCount++;
+    correct[letter] = true;
+    }
+
+    //  Now draw the word, letter by letter, changing colour as required
+    if (correct[letter]) {
+    bmd.context.fillStyle = '#000000';
+
+    }
+
+    else {
+
+
+    bmd.context.fillStyle = '#ffffff';
+
+    }
+
+    bmd.context.fillText(letter, x, 64);
+
+    x += bmd.context.measureText(letter).width;
+
+    }
+    }//endo of create
+
+    function onUpdate(anim, frame) {
+
+    // text.text = 'Frame ' + frame.index;//change postions of the Hang note
+
+
+    }
+
+    function update(){
+    //change postions of the Hang note
+    if (count == 1) {
+    hang.x = 150;
+    hang.y = 150;
+
+    }
+    if (count == 2) {
+    hang.x = 160;
+    hang.y = 190;
+    }
+    if (count == 3) {
+    hang.x = 200;
+    hang.y = 230;
+    }
+    if (count == 4) {
+    hang.x = 250;
+    hang.y = 265;
+    }
+    if (count == 5) {
+    hang.x = 300;
+    hang.y = 300;
+
+    //hangman frown
+    var frown = hang.animations.add('frown', [5]);
+
+    frown.enableUpdate = true;
+    frown.onUpdate.add(onUpdate, this);
+
+    hang.animations.play('frown', 3, true);
+    // this.hang.anchor.setTo(0.5, 0.5);
+    while (hang.angle != 60) {
+    hang.angle += 1;
+    }
+
+    }
+
+
+    if (count > 5) {
+    if (game.physics.arcade.collide(creature, hang, collisionHandler, processHandler, this)) {
+
+    console.log('boom');
+
+    }
+
+
+    if (creature.x != 300) {
+    creature.x -= 1;
+    }
+    else {
+    game.input.onDown.addOnce(changeNote, this);
+    }
+    }
+    }
+    //functions to handel colition
+    function processHandler(player, veg) {
+
+    return true;
+
+    }
+
+    function collisionHandler(player, veg) {
+
+    if (hang.frame == 5) {
+    hang.kill();
+    }
+
+    }
+
+    //function to change spreadsheet
+    function changeNote() {
        
+    creature.loadTexture('eaten', 0);
+        creature.body.setSize(900, 800);
 
-        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { create: create });
-        game.backgroundColor
+    creature.animations.add('eaten');
 
-        var word = "cresendo";
-        var correct = [];
-        var bmd;
-        var guesses =[]
+    creature.animations.play('eaten', 2, true);
 
-        function create() {
-            game.stage.backgroundColor = "#FFFFFF";
-
-            //  Here we'll create a simple array where each letter of the word to enter represents one element:
-            for (var i = 0; i < word.length; i++) {
-                correct[word[i]] = false;
-            }
-
-            //  This is our BitmapData onto which we'll draw the word being entered
-            bmd = game.make.bitmapData(800, 200);
-            bmd.context.font = '60px Arial';
-            bmd.context.fillStyle = '#ffffff';
-            bmd.context.fillText(word, 64, 64);
-            bmd.addToWorld(90,400);
-
-            
-            //  Capture all key presses
-            game.input.keyboard.addCallbacks(this, null, null, keyPress);
-
-        }
-        var wordCount = 0;
-        var count = 0;
-        var postion=0;
-        function keyPress(char) {
-
-            //  Clear the BMD
-            bmd.cls();
-
-            //  Set the x value we'll start drawing the text from
-            var x = 64;
-
-            if (!guesses.includes(char)) {
-                guesses.push(char);
-               
-            }
-            for (var j = 0; j < guesses.length; j++){
-                //var s = guesses.sort();
-                
-                var outPut = game.add.text(90 + (j * 12), 500 , guesses[j], {
-                    font: "15px Arial",
-                    fill: "#ff0044"
-                })
-            }
-            if(!word.includes(char)) {
-                count++;
-              
-            }
-            if (count > 5) {
-               
-
-
-                console.log(count);
-                text = game.add.text(game.world.centerX, game.world.centerY, "Nice Try", {
-                    font: "15px Arial",
-                    fill: "#ff0044",
-                    align: "center"
-                })
+    }
 
 
 
-            }
-            if (wordCount == word.length-1) {
-                var win = game.add.text(90, 300, "you win", {
-                    font: "15px Arial",
-                    fill: "#ff0044"})
-            }
-
-
-            //  Loop through each letter of the word being entered and check them against the key that was pressed
-            for (var i = 0; i < word.length ; i++) {
-                var letter = word.charAt(i);
-
-
-               
-                
-
-                
-
-                //  If they pressed one of the letters in the word, flag it as correct
-
-                if (count > 5) {
-                    correct[letter] = true
-                }
-                if (char === letter) {
-                    wordCount++;
-                    correct[letter] = true;
-                }
-
-                //  Now draw the word, letter by letter, changing colour as required
-                if (correct[letter]) {
-                    bmd.context.fillStyle = '#000000';          
-                    
-                }
-
-                else {
-
-                   
-                    bmd.context.fillStyle = '#ffffff';
-                    
-                }
-
-                bmd.context.fillText(letter, x, 64);
-
-                x += bmd.context.measureText(letter).width;
-            
-            }
-        }
-
-        
-
-
-        </script>
-</body >
+    </script>
+</body>
 </html >
