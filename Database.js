@@ -16,9 +16,17 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-var usersRef = ref.child("users");
+//database.set({ "hello": "Dianna" });
+
+var usersRef = database.ref("vocab");
 usersRef.set({
-    vocab: {
+    
         word: "Cresendo",
         defintion: "Gradually get louder"
-    },
+})
+
+var readRef = database.ref("vocab");
+
+ readRef.once('value').then(function (snapshot) {
+     
+});
