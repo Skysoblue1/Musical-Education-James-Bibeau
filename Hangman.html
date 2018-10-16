@@ -4,7 +4,7 @@
     <script src="phaser1.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
-
+  
     <script>
     // JavaScript source code
     // Get a reference to the database service
@@ -31,79 +31,89 @@
     game.backgroundColor
 
       
-    var database = firebase.database();
-
+        var database = firebase.database();
+        var readRef = database.ref("vocab");
+        var tempWord;
+        var word;
+        var def;
     //database.set({ "hello": "Dianna" });
 
- var usersRef = database.ref("vocab");
-    usersRef.set({
-
-        word: "Cresendo",
-        defintion: "Gradually get louder"
-    })
-        
         var readRef = database.ref("vocab");
-       readRef.on('value', gotData, errData);
+        function data() {
+            return new Promise(function (resolve, reject) {
+
+                try {
+                    readRef.once('value').then(function (snapshot) {
+                        resolve(snapshot.val());
+                    });
+                } catch (e) {
+                    reject(e);
+
+                }
+
+            })
+            
+        }
+        //  Here we'll create a simple array where each letter of the word to enter represents one element: 
+        function setWord() {
+
+            for (var i = 0; i < word.length; i++) {
+                correct[word[i]] = false;
+                console.log("lige")
+            }
+            var writeDef = game.add.text(400, 150, def, {
+                font: "20px Arial",
+                fill: "#800000"
+            })
+            for (var i = 0; i < word.length; i++) {
+                var linema = game.add.sprite(150 + (i * 31), 466, 'linem');
+                linema.scale.setTo(0.05, 0.05);
+
+            }
+            ;
+
+        }
+        data().then(function (data) {
+            word = data.word;
+            def = data.defintion
+            setWord();
+           
+           // create();
+            /*var random Propery= Function(obj){
+                var keys= object.keys(obj)
+                return obj[keys[keys.length*Math.random()<<0]];
+            }*/
+        })
+
         var bmd;
-        var word;
+       
         var guesses = [];
         var creature;
         var hang;      
         var wordCount = 0;
         var count = 0;
         var postion = 0;
-        
-      
-
-        function gotData(data) {
-
-            readRef.once('value').then(function (snapshot) {
-
-                // convert snapshot.val() to array. Snapshot.val() is JSON object. 
-                // use random number for index for array and save element to word.
-                var temp = snapshot.val();
-
-                console.log(Object.getOwnPropertyNames(temp));
-                console.log(Object.getOwnPropertyNames(temp)[0]);
-                //var correct = [];
-                 word = Object.getOwnPropertyNames(temp)[0];
-               // word = JSON.parse(tempT);
-                console.log(word);
-
-            });
-        }
-        function errData(err) {
-            console.log('Error');
-            console.log(err);
-        }
+        var number = 0;
 
     function preload() {
-    game.load.spritesheet('pic', 'assets/MainChar/musicAnimation.png', 256.26, 260);
+        game.load.spritesheet('pic', 'assets/MainChar/musicAnimation.png', 213.54, 200);
+        //334.5
 
-    game.load.spritesheet('creature', 'assets/CreatureA.png', 405, 277 );
-    game.load.spritesheet('hang', 'assets/hangman.png', 161, 181);
+    game.load.spritesheet('creature', 'assets/CreatureB.png', 405, 400 );
+    game.load.spritesheet('hang', 'assets/hangmanb.png', 172.75, 181);
     game.load.spritesheet('eaten', 'assets/eat.png', 405, 277);
-
+        //CreatureA is  405,277
+        //hangman 161,181
 
     game.load.image('border', 'assets/border.png');
     game.load.image('drum', 'assets/Drum.png');
     game.load.image('musicl', 'assets/MusicLine.png');
     game.load.image('Hang1', 'assets/hangman1.png');
+        game.load.image('linem', 'assets/lineb.png');
    
 
 
 
-     /*  readRef.once('value').then(function (snapshot) {
-
-            // convert snapshot.val() to array. Snapshot.val() is JSON object. 
-            // use random number for index for array and save element to word.
-            var temp = snapshot.val();
-
-            word = temp;
-            console.log(Object.getOwnPropertyNames(temp));
-            console.log(Object.getOwnPropertyNames(temp)[0]);
-         
-        });*/
         
     }
         var correct = [];
@@ -111,33 +121,42 @@
     function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    var CopyWrite = game.add.text(500, 100, "(c) 2018 Dianna Bibeau and Skyler James All Rights Reserved", {
-    font: "15px Arial",
-    fill: "#000000"
-    })
+        console.log(def);
+     var CopyWrite = game.add.text(500, 100, "(c) 2018 Dianna Bibeau and Skyler James All Rights Reserved", {
+        font: "15px Arial",
+        fill: "#000000"
+        })
 
     game.stage.backgroundColor = "#FFFFFF";
-
+        var writeDef = game.add.text(200, 200, def, {
+            font: "20px Arial",
+            fill: "#800000"
+        })
     //creating spirtes
     var border = game.add.sprite(0, 0, 'border');
     var drump = game.add.sprite(540, 400, 'drum');
     var image = game.add.sprite(600, 280, 'pic');
     var Line = game.add.sprite(300, 300, 'musicl');
-    var hangO = game.add.sprite(100, 150, 'Hang1');
-    hang = game.add.sprite(100, 120, 'hang');
-    creature = game.add.sprite(400, 250, 'creature');
+        var hangO = game.add.sprite(100, 150, 'Hang1');
+       
+        creature = game.add.sprite(400, 240, 'creature');
+        hang = game.add.sprite(100, 110, 'hang');
+        
+       
+      
+        
 
     //adding physics to sprites
     game.physics.enable(hang, Phaser.Physics.ARCADE);
     game.physics.enable(creature, Phaser.Physics.ARCADE);
 
     //changing size of image
-    image.scale.setTo(0.7, 0.7);
+    image.scale.setTo(0.99, 0.99);
     hangO.scale.setTo(0.4, 0.4);
     hang.scale.setTo(0.5, 0.5);
     border.scale.setTo(0.8, 0.8);
-    creature.scale.setTo(0.5, 0.5);
+        creature.scale.setTo(0.5, 0.5);
+      
 
     //main character animation
     image.frame = 6;
@@ -160,11 +179,8 @@
     creature.animations.play('blinkThree', 3, true);
 
 
-    //  Here we'll create a simple array where each letter of the word to enter represents one element:
-       for (var i = 0; i < word.length; i++) {
-                correct[word[i]] = false;
-            }
-   
+
+       
 
     //  This is our BitmapData onto which we'll draw the word being entered
     bmd = game.make.bitmapData(800, 200);
@@ -173,13 +189,17 @@
     bmd.context.fillText(word, 64, 64);
     bmd.addToWorld(90,400);
 
+        
 
     //  Capture all key presses
     game.input.keyboard.addCallbacks(this, null, null, keyPress);
 
-    }//end of create
+        }//end of create
 
+        
+       
     function keyPress(char) {
+       
 
     //  Clear the BMD
     bmd.cls();
@@ -189,27 +209,26 @@
 
     if (!guesses.includes(char)) {
        guesses.push(char);
-
-        }
         if (!word.includes(char)) {
             count++;
-
         }
-    for (var j = 0; j < guesses.length; j++){
-    //var s = guesses.sort();
+        for (var j = 0; j < guesses.length; j++) {
+            //var s = guesses.sort();
 
-    var outPut = game.add.text(90 + (j * 12), 500 , guesses[j], {
-    font: "15px Arial",
-    fill: "#ff0044"
-    })
-    }
+            var outPut = game.add.text(110 + (j * 12), 500, guesses[j], {
+                font: "20px Arial",
+                fill: "#800000"
+            })
+        }
+        }
+    
            
         //check if all tires are done
          if (count > 5) {
         console.log(count);
          text = game.add.text(game.world.centerX, game.world.centerY, "Nice Try", {
              font: "15px Arial",
-             fill: "#ff0044",
+             fill: "#800000",//maroon 
              align: "center"
     })
 
@@ -218,7 +237,7 @@
         if (wordCount == word.length - 1) {
                 var win = game.add.text(500, 300, "you win", {
                 font: "15px Arial",
-                fill: "#ff0044"})
+                fill: "#006400" })
     }
 
 
@@ -232,7 +251,7 @@
         correct[letter] = true;
     }
     if (char === letter) {
-   // wordCount++;
+    wordCount++;
     correct[letter] = true;
     }
 
@@ -263,12 +282,12 @@
     //change postions of the Hang note
     if (count == 1) {
     hang.x = 150;
-    hang.y = 150;
+    hang.y = 148;
 
     }
     if (count == 2) {
     hang.x = 160;
-    hang.y = 190;
+    hang.y = 188;
     }
     if (count == 3) {
     hang.x = 200;
@@ -283,7 +302,7 @@
             hang.y = 300;
 
             //hangman frown
-            var frown = hang.animations.add('frown', [5]);
+            var frown = hang.animations.add('frown', [6]);
 
             frown.enableUpdate = true;
             frown.onUpdate.add(onUpdate, this);
@@ -293,42 +312,50 @@
             while (hang.angle != 60) {
                 hang.angle += 1;
             }
-
+            game.world.bringToTop(hang);
         }
         //changeing spritesheets when you lose
         if (count > 5) {
-
+           
             if (game.physics.arcade.collide(creature, hang, collisionHandler, processHandler, this)) {
-               
+
 
                 console.log('boom');
-                var eat = creature.animations.add('eat', [6,7, 8, 9, 10, 11, 12, 13, 14]);
+                var eat = creature.animations.add('eat', [6, 7, 8, 9, 10, 11, 12, 13, 14]);
                 // creature.animations.setTo('eat');
                 eat.enableUpdate = true;
                 eat.onUpdate.add(onUpdate, this);
-               
 
-    }
-            if (creature.x != 300) {
+
+            }
+            if (creature.x != 250) {
+               
                 creature.x -= 1;
+                creature.animations.play('blinkThree', 3, true);
             }
             else {
-                creature.animations.play('eat', 2, false);
               //  creature.anchor.setTo(0.5, 0.5);
-                //  creature.frame = 14;
-                //if (creature.frame == 14) {
-                  //  creature.frame =14;
-               // }
-               // if (creature.angle != 120){
-                   // creature.angle += 1;
-               // }
-               // if(creature.angle==120)    {
+                creature.animations.play('eat', 2, false);
+                if (number < 250) {
+                    number++;
                    
-              //  }
+                  //  creature.angle += .58;
+                } else {
+                    creature.frame = 14;
+                }
+                //if (creature.frame == 14) {
+                //  creature.frame =14;
+                // }
+                // if (creature.angle != 120){
+                //
+                // }
+                // if(creature.angle==120)    {
+
+                //  }
             }
-               // game.input.onDown.addOnce(changeNote, this);
-               //creature.frame = [7,8,9,10,11,12,13,14];
-    }
+          
+        }
+       
     
         }//end of update
         
@@ -338,29 +365,23 @@
     return true;
 
         }//end of process Handler
-
+        var time = 0;
     function collisionHandler(player, veg) {
     //makes the hangnote disapear
-    if (hang.frame == 5) {
-    hang.kill();
+        if (hang.frame == 6) {
+            //var tween = game.add.tween(hang).to({ alpha: 1 }, 2000, "Linear", true, 000);
+            
+            if (time < 125) {
+                time++;
+            }
+            else { hang.kill(); }
+
+    
     }
 
     }//end of collisionHandler
 
-    //function to change spreadsheet
-    function changeNote() {
-       
-    creature.loadTexture('eaten', 0);
-      //  creature.body.setSize(900, 800);
-
-    creature.animations.add('eaten');
-
-        creature.animations.play('eaten', 2, false);
-        creature.anchor.x = 0.1;
-       // creature.anchor.y = ;
-       // game.add.tween(creature).to({ angle: 45 }, 2000, Phaser.Easing.Linear.None, true);
-
-    }//end of change note
+    
     </script>
 </body>
 </html >
