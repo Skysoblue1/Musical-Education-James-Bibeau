@@ -21,7 +21,7 @@ var database = firebase.database();
 var usersRef = database.ref("vocab");
 usersRef.set({
     
-        word: "Cresendo",
+        word: "cresendo",
         defintion: "Gradually get louder"
 })
 
