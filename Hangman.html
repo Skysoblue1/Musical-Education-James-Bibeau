@@ -112,10 +112,10 @@
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    var CopyWrite = game.add.text(500, 100, "(c) 2018 Dianna Bibeau and Skyler James All Rights Reserved", {
-    font: "15px Arial",
-    fill: "#000000"
-    })
+   // var CopyWrite = game.add.text(500, 100, "(c) 2018 Dianna Bibeau and Skyler James All Rights Reserved", {
+    //font: "15px Arial",
+    //fill: "#000000"
+    //})
 
     game.stage.backgroundColor = "#FFFFFF";
 
@@ -198,18 +198,18 @@
     for (var j = 0; j < guesses.length; j++){
     //var s = guesses.sort();
 
-    var outPut = game.add.text(90 + (j * 12), 500 , guesses[j], {
-    font: "15px Arial",
-    fill: "#ff0044"
+    var outPut = game.add.text(140 + (j * 12), 500 , guesses[j], {
+    font: "20px Arial",
+    fill: "#800000"
     })
     }
            
         //check if all tires are done
          if (count > 5) {
         console.log(count);
-         text = game.add.text(game.world.centerX, game.world.centerY, "Nice Try", {
-             font: "15px Arial",
-             fill: "#ff0044",
+         text = game.add.text(400, 260, "Nice Try", { //game.world.centerX, game.world.centerY
+             font: "20px Arial",
+             fill: "#800000",
              align: "center"
     })
 
@@ -217,8 +217,8 @@
         //check for win
         if (wordCount == word.length - 1) {
                 var win = game.add.text(500, 300, "you win", {
-                font: "15px Arial",
-                fill: "#ff0044"})
+                font: "20px Arial",
+                fill: "#006400"})
     }
 
 
@@ -313,7 +313,11 @@
                 creature.x -= 1;
             }
             else {
+                
+                //creature.anchor.setTo(0.0);
+                //game.add.tween(creature).to( { angle:180 }, 2000, Phaser.Easing.Linear.None, true);
                 creature.animations.play('eat', 2, false);
+
               //  creature.anchor.setTo(0.5, 0.5);
                 //  creature.frame = 14;
                 //if (creature.frame == 14) {
@@ -332,7 +336,7 @@
     
         }//end of update
         
-    //functions to handel colition
+    //functions to handle collision
     function processHandler(player, veg) {
 
     return true;
