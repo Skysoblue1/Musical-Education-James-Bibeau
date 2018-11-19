@@ -1,8 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="phaser1.js"></script>
+    <script src="phaser1.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+
+    <script>
+        // JavaScript source code
+        // Get a reference to the database service
+
+        src = "https://www.gstatic.com/firebasejs/5.5.1/firebase.js"
+
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkaUpgh9idin25SJLG80F-WJ_80jT6LFw",
+            authDomain: "musical-education-db-sj.firebaseapp.com",
+            databaseURL: "https://musical-education-db-sj.firebaseio.com",
+            projectId: "musical-education-db-sj",
+            storageBucket: "musical-education-db-sj.appspot.com",
+            messagingSenderId: "1091945993717"
+        };
+
+        firebase.initializeApp(config);
+    </script>
+</head>
+<body>
 	 <script> 
 	 	var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser', { preload: this.preload, create: this.create});
 
@@ -13,12 +35,45 @@
 
 		var piecesGroup,
    			piecesAmount,
-    		shuffledIndexArray = ['Guill1','Guill2','Guill3', 'Guill4','Gull5','Guill6','Guill7','Guill8'];
+                    shuffledIndexArray = ['Guill1', 'Guill2', 'Guill3', 'Guill4', 'Gull5', 'Guill6', 'Guill7', 'Guill8'];
+
+         var path;
+         var number;
+         var database = firebase.database();
+         var readRef = database.ref("puzzle");
+
+         try {
+             readRef.once('value').then(function (snapshot) {
+                 resolve(snapshot.val());
+                 var keys = Object.keys(snapshot.val());
+                 console.log(keys);
+                 var item = keys[Math.floor(Math.random() * keys.length)];
+                 console.log(item);
+                 var temp = snapshot.val()[item];
+                 console.log("temp");
+                 console.log(temp)
+
+                 resolve({ number: item, path: temp });
+             
+         
+             });
+
+         } catch (e) {
+             reject(e);
+         }
+
+         data().then(function (data) {
+             path = data.path;
+            
+            
+
+             
+         })
 
  	function preload(){
  	//game.load.image('Guill', 'assets/Guillaume.png', PIECE_WIDTH, PIECE_HEIGHT);
  	
- 	game.load.image('Guill1', 'assets/Guill1.jpg',PIECE_WIDTH,PIECE_HEIGHT);
+ 	game.load.image('Guill1', path,PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill2', 'assets/Guill2.jpg',PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill3', 'assets/Guill3.jpg',PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill4', 'assets/Guill4.jpg',PIECE_WIDTH,PIECE_HEIGHT);
