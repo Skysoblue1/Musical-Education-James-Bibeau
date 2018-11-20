@@ -6,19 +6,23 @@
 	 <script> 
 	 	var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser', { preload: this.preload, create: this.create});
 
+
 	 	var PIECE_WIDTH = 130,
     		PIECE_HEIGHT = 130,
+
     		BOARD_COLS,
    			BOARD_ROWS;
 
 		var piecesGroup,
    			piecesAmount,
+
     		shuffledIndexArray = [];
 
  	function preload(){
  	//game.load.image('Guill', 'assets/Guillaume.png', PIECE_WIDTH, PIECE_HEIGHT);
  	game.load.spritesheet('background','assets/Ga.png', PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill1', 'assets/Guill1.jpg',PIECE_WIDTH,PIECE_HEIGHT);
+
  	//game.load.image('Guill2', 'assets/Guill2.jpg',PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill3', 'assets/Guill3.jpg',PIECE_WIDTH,PIECE_HEIGHT);
  	//game.load.image('Guill4', 'assets/Guill4.jpg',PIECE_WIDTH,PIECE_HEIGHT);
@@ -37,7 +41,7 @@
     console.log('hello');
 
     //var Guillaume = game.add.image(0, 0, 'Guill');
-    //var G1 = game.add.image(0,0,'Guill1');
+
     //var G2 = game.add.image(0,0,'Guill2');
     //var G3 = game.add.image(0,0,'Guill3');
     //var G4 = game.add.image(0,0,'Guill4');
