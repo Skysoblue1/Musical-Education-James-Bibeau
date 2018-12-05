@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="phaser1.js"></script>
+    
+</head>
+<body>
+    <script>
+        var cardOne;
+        var map;
+        var count;
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create ,onUpdate: onUpdate});
+        var layer1;
+        var count=0;
+        var tempStore=[];
+        function preload() {
+           game.load.spritesheet('cardtrump', 'assets/card1.png', 340, 383);
+           // game.load.image('cardtrump','assets/backcard.png');
+        }
+    function create() {
+        game.stage.backgroundColor = "#FFFFFF";
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        //map = game.add.tilemap();
+
+        //  Add a Tileset image to the map
+        //map.addTilesetImage('cardtrump');
+
+        //layer1 = map.create('level1', 8, 8, 331 ,475);
+        while (count < 2) {
+            cardOne = game.add.sprite(100 + (count * 100), 100, "cardtrump");
+            
+            //giveing the card a number value to compare and latter be stored in the array
+            cardOne.number = 3;
+            
+            //scale to size
+            cardOne.scale.setTo(0.3, 0.3);
+            count++;
+        }
+        //animations
+        var blinkTwo = cardOne.animations.add('blinkTwo', [0,1]);
+        blinkTwo.enableUpdate = true;
+       //blinkTwo.onUpdate.add(onUpdate, this);
+       cardOne.animations.play('blinkTwo', 1, true);
+        console.log("def");
+        }
+        function gamePlay() {
+        if()}
+        function onUpdate() {
+            count += 0.005;
+
+            cardOne.tileScale.x = 2 + Math.sin(count);
+            
+
+            cardOne.tilePosition.x += 1;
+            
+            var hello;
+        }
+    </script>
+</body>
+</html>
