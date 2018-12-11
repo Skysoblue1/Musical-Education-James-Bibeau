@@ -74,9 +74,20 @@
         cardThirteen = game.add.sprite(215, 240, "cardclair2");
 
         cardFive = game.add.sprite(100 + ((0 + 2.2) * 100), 240, "carddrum");
-        cardFourteen = game.add.sprite(100 + ((1 + 2.2) * 100), 70, "carddrum2");
+        cardFourteen = game.add.sprite(100 + ((1 + 2.2) * 100), 240, "carddrum2");
 
-        cardSix = game.add.sprite(100 + ((count + 4.4) * 100), 240, "cardfrench");
+        cardSix = game.add.sprite(100 + ((0 + 4.4) * 100), 240, "cardfrench");
+        cardFifteen = game.add.sprite(100 + ((1 + 4.4) * 100), 240, "cardfrench2");
+
+        //third row
+        cardSeven = game.add.sprite(100 + ((count + .1) * 100), 440, "cardtuba");
+        cardSixteen = game.add.sprite(215, 440, "tuba2");
+
+        cardEight = game.add.sprite(100 + ((count + 2.2) * 100), 440, "cardtrumb");
+        cardSeventeen = game.add.sprite(100 + ((1 + 2.2) * 100), 440, "cardtrumb2");
+
+        cardNine = game.add.sprite(100 + ((count + 4.4) * 100), 440, "cardpiano");
+        cardEighteen = game.add.sprite(100 + ((1 + 4.4) * 100), 440, "cardpiano2");
 
         //give card a number
         cardOne.number = 3;
@@ -106,28 +117,10 @@
         cardSeven.inputEnabled = true; cardSixteen.inputEnabled = true;
         cardEight.inputEnabled = true; cardSeventeen.inputEnabled = true;
         cardNine.inputEnabled = true; cardEighteen.inputEnabled = true;
-       
-        
       
-      
-        
-       
         
           //  cardTwo = game.add.sprite(100 + ((count + 2.2) * 100), 70, "cardflute");
            
-        while (count < 2) {
-           
-
-            //third row
-            cardSeven = game.add.sprite(100 + ((count + .1) * 100), 440, "cardtuba");
-            cardEight = game.add.sprite(100 + ((count + 2.2) * 100), 440, "cardtrumb");
-            cardNine = game.add.sprite(100 + ((count + 4.4) * 100), 440, "cardpiano");
-
-            //giveing the card a number value to compare and latter be stored in the array
-          
-        
-            count++;
-        }
         //trumpet animations
         var blinkTwo = cardOne.animations.add('blinkTwo', [1]);
         blinkTwo.enableUpdate = true;
