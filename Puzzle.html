@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="phaser1.js"></script>
+    <script src="phaser1.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+
+    <script>
+        // JavaScript source code
+        // Get a reference to the database service
+        src = "https://www.gstatic.com/firebasejs/5.5.1/firebase.js"
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkaUpgh9idin25SJLG80F-WJ_80jT6LFw",
+            authDomain: "musical-education-db-sj.firebaseapp.com",
+            databaseURL: "https://musical-education-db-sj.firebaseio.com",
+            projectId: "musical-education-db-sj",
+            storageBucket: "musical-education-db-sj.appspot.com",
+            messagingSenderId: "1091945993717"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+</head>
+<body>
 	 <script> 
 
-	 	var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser', { preload: this.preload, create: this.create});//391,414
+	 	var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser', { data: this.data, preload: this.preload, create: this.create});//391,414
 
 	 	var PIECE_WIDTH = 200,//102
     		PIECE_HEIGHT = 200,//101
@@ -15,42 +35,60 @@
 		var piecesGroup,
    			piecesAmount,
 
-    		shuffledIndexArray = [];
+                    shuffledIndexArray = [];
+         var storage = firebase.storage();
+         //var pathReference = storage.ref('Ga.png');
+         var database = firebase.database();
+         var readRef = database.ref("puzzle");
+         var path;
+         var number;
+         function data() {
+             return new Promise(function (resolve, reject) {
+                 try {
+                     readRef.once('value').then(function (snapshot) {
+                         resolve(snapshot.val());
+                         var keys = Object.keys(snapshot.val());
+                         console.log(keys);
+                         var item = keys[Math.floor(Math.random() * keys.length)];
+                         console.log(item);
+                         var temp = snapshot.val()[item];
+                         console.log("temp");
+                         console.log(temp)
+                         
+                         resolve({ numbers: item, paths: temp });
+                     });
+                 }
+                 catch (e) {
+                     reject(e);
+                 }
+             })
+         }
+         data().then(function (data) {
 
- 	function preload(){
+             console.log(data);
+             number = data.numbers;
+             path = data[1];
+             console.log(path)
+         
+         })
+
+
+         function preload() {
+             data();
+             
+             console.log(path);
+             
  	//game.load.image('Guill', 'assets/Guillaume.png', PIECE_WIDTH, PIECE_HEIGHT);
- 	game.load.spritesheet('background','assets/Ga.png', PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill1', 'assets/Guill1.jpg',PIECE_WIDTH,PIECE_HEIGHT);
+             game.load.spritesheet('background', path, PIECE_WIDTH,PIECE_HEIGHT);
+ 
 
- 	//game.load.image('Guill2', 'assets/Guill2.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill3', 'assets/Guill3.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill4', 'assets/Guill4.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill5', 'assets/Guill5.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill6', 'assets/Guill6.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill7', 'assets/Guill7.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill8', 'assets/Guill8.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill9', 'assets/Guill9.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill10', 'assets/Guill10.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill11', 'assets/Guill11.jpg',PIECE_WIDTH,PIECE_HEIGHT);
- 	//game.load.image('Guill12', 'assets/Guill12.jpg',PIECE_WIDTH,PIECE_HEIGHT);
 
  	console.log('1');
 }
 	function create() {	
     console.log('hello');
 
-    //var Guillaume = game.add.image(0, 0, 'Guill');
-
-    //var G2 = game.add.image(0,0,'Guill2');
-    //var G3 = game.add.image(0,0,'Guill3');
-    //var G4 = game.add.image(0,0,'Guill4');
-    //var G5 = game.add.image(0,0,'Guill5');
-    //var G6 = game.add.image(0,0,'Guill6');
-    //var G7 = game.add.image(0,0,'Guill7');
-    //var G8 = game.add.image(0,0,'Guill8');
-    //var G9 = game.add.image(0,0,'Guill9');
-    //var G10 = game.add.image(0,0,'Guill10');
-    //var G11 = game.add.image(0,0,'Guill11');
+    
     //var G12 = game.add.image(0,0,'Guill12');
     prepareBoard();
 }

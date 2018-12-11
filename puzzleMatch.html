@@ -7,15 +7,47 @@
 </head>
 <body>
     <script>
-        var cardOne;
+        var cardOne;   var cardTen;
+        var cardTwo;   var cardElven; 
+        var cardThree; var cardTwelve;
+        var cardFour;  var cardThirteen;
+        var cardFive;  var cardFourteen; 
+        var cardSix;  var cardFifteen;
+        var cardSeven; var cardSixteen;
+        var cardEight; var cardSeventeen;
+        var cardNine;  var cardEighteen;
+        
+        
         var map;
         var count;
+        var backTen;
         var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create ,onUpdate: onUpdate});
         var layer1;
         var count=0;
-        var tempStore=[];
+        var temp=[];
         function preload() {
-           game.load.spritesheet('cardtrump', 'assets/card1.png', 340, 383);
+            game.load.spritesheet('cardtrump', 'assets/card1.png', 310, 448);
+            game.load.spritesheet('cardtrump2', 'assets/trumpCard2.png', 237, 359);
+
+            game.load.spritesheet('cardflute', 'assets/fluteCard.png', 295, 448);
+            game.load.spritesheet('cardflute2', 'assets/fluteCard2.png', 237, 359);
+
+            game.load.spritesheet('cardsax', 'assets/saxCard.png', 295, 448);
+            game.load.spritesheet('cardsax2', 'assets/saxCard2.png', 237, 359);
+
+            game.load.spritesheet('cardclair', 'assets/clairCard.png', 295, 448);
+            game.load.spritesheet('cardclair2', 'assets/clairCard2.png', 237, 359);
+
+            game.load.spritesheet('carddrum', 'assets/drumCard.png', 295, 448);
+            game.load.spritesheet('carddrum2', 'assets/drumCard2.png', 237, 359);
+
+            game.load.spritesheet('cardfrench', 'assets/frenchCard.png', 295, 448);
+            game.load.spritesheet('cardfrench2', 'assets/frenchCard2.png', 237, 359);
+
+            game.load.spritesheet('cardtuba', 'assets/tubaCard.png', 295, 448);
+            game.load.spritesheet('cardtrumb', 'assets/trumbCard.png', 295, 448);
+            game.load.spritesheet('cardpiano', 'assets/pianoCard.png', 295, 448);
+           // game.load.image('cardtrump','assets/backcard.pn
            // game.load.image('cardtrump','assets/backcard.png');
         }
     function create() {
@@ -28,34 +60,251 @@
         //map.addTilesetImage('cardtrump');
 
         //layer1 = map.create('level1', 8, 8, 331 ,475);
+        cardOne = game.add.sprite(100, 70, "cardtrump");
+        cardTen = game.add.sprite(215, 70, "cardtrump2");
+
+        cardTwo = game.add.sprite(100 + ((0 + 2.2) * 100), 70, "cardflute");
+        cardEleven = game.add.sprite(100 + ((1+ 2.2) * 100), 70, "cardflute2");
+
+        cardThree = game.add.sprite(100 + ((0 + 4.4) * 100), 70, "cardsax");
+        cardTwelve = game.add.sprite(100 + ((1 + 4.4) * 100), 70, "cardsax2");
+
+         //second row
+        cardFour = game.add.sprite(100 , 240, "cardclair");
+        cardThirteen = game.add.sprite(215, 240, "cardclair2");
+
+        cardFive = game.add.sprite(100 + ((0 + 2.2) * 100), 240, "carddrum");
+        cardFourteen = game.add.sprite(100 + ((1 + 2.2) * 100), 70, "carddrum2");
+
+        cardSix = game.add.sprite(100 + ((count + 4.4) * 100), 240, "cardfrench");
+
+        //give card a number
+        cardOne.number = 3;
+        cardTen.number = 3;
+        cardTwo.number = 4;
+        cardEleven.number = 4;
+
+        //scale t0 size
+        cardOne.scale.setTo(0.3, 0.3); cardTen.scale.setTo(0.37, 0.37);
+        cardTwo.scale.setTo(0.3, 0.3); cardEleven.scale.setTo(0.37, 0.37);
+        cardThree.scale.setTo(0.3, 0.3); cardTwelve.scale.setTo(0.37, 0.37);
+        cardFour.scale.setTo(0.3, 0.3); cardThirteen.scale.setTo(0.37, 0.37);
+        cardFive.scale.setTo(0.3, 0.3); cardFourteen.scale.setTo(0.37, 0.37);
+        cardSix.scale.setTo(0.3, 0.3); cardFifteen.scale.setTo(0.37, 0.37);
+        cardSeven.scale.setTo(0.3, 0.3); cardSixteen.scale.setTo(0.37, 0.37);
+        cardEight.scale.setTo(0.3, 0.3); cardSeventeen.scale.setTo(0.37, 0.37);
+        cardNine.scale.setTo(0.3, 0.3); cardEighteen.scale.setTo(0.37, 0.37);
+        
+        
+        // inableing input
+        cardOne.inputEnabled = true; cardTen.inputEnabled = true;
+        cardTwo.inputEnabled = true; cardEleven.inputEnabled = true;
+        cardThree.inputEnabled = true; cardTwelve.inputEnabled = true;
+        cardFour.inputEnabled = true; cardThirteen.inputEnabled = true;
+        cardFive.inputEnabled = true; cardFourteen.inputEnabled = true;
+        cardSix.inputEnabled = true; cardFifteen.inputEnabled = true;
+        cardSeven.inputEnabled = true; cardSixteen.inputEnabled = true;
+        cardEight.inputEnabled = true; cardSeventeen.inputEnabled = true;
+        cardNine.inputEnabled = true; cardEighteen.inputEnabled = true;
+       
+        
+      
+      
+        
+       
+        
+          //  cardTwo = game.add.sprite(100 + ((count + 2.2) * 100), 70, "cardflute");
+           
         while (count < 2) {
-            cardOne = game.add.sprite(100 + (count * 100), 100, "cardtrump");
-            
+           
+
+            //third row
+            cardSeven = game.add.sprite(100 + ((count + .1) * 100), 440, "cardtuba");
+            cardEight = game.add.sprite(100 + ((count + 2.2) * 100), 440, "cardtrumb");
+            cardNine = game.add.sprite(100 + ((count + 4.4) * 100), 440, "cardpiano");
+
             //giveing the card a number value to compare and latter be stored in the array
-            cardOne.number = 3;
-            
-            //scale to size
-            cardOne.scale.setTo(0.3, 0.3);
+          
+        
             count++;
         }
-        //animations
-        var blinkTwo = cardOne.animations.add('blinkTwo', [0,1]);
+        //trumpet animations
+        var blinkTwo = cardOne.animations.add('blinkTwo', [1]);
         blinkTwo.enableUpdate = true;
-       //blinkTwo.onUpdate.add(onUpdate, this);
-       cardOne.animations.play('blinkTwo', 1, true);
-        console.log("def");
-        }
+        //blinkTwo.onUpdate.add(onUpdate, this);
+        cardOne.animations.play('blinkTwo', 1, true);
+
+        //trumpet2 animations
+        backTen = cardTen.animations.add('backTen', [1]);
+        backTen.enableUpdate = true;
+        //blinkTwo.onUpdate.add(onUpdate, this);
+        cardTen.animations.play('backTen', 1, true);
+
+        //flute animations
+        var backTwo = cardTwo.animations.add('backTwo', [1]);
+        backTwo.enableUpdate = true;
+        cardTwo.animations.play('backTwo', 1, true);
+        //flute2  animations
+
+        var backflutetwo = cardEleven.animations.add('backflutetwo', [1]);
+        backflutetwo.enableUpdate = true;
+        cardEleven.animations.play('backflutetwo', 1, true);
+
+
+        gamePlay();
+       
+        }//end of create
+
+        var winc = 0;
+        var win = 0;
+        var i = 0;
+
         function gamePlay() {
-        if()}
+           
+            if (winc < 2) { 
+                //for trumpter
+            cardOne.events.onInputDown.add(function (a) {
+                temp.push(a.number); console.log(a.number);
+                //trumpet animations
+                var blinkTwo = cardOne.animations.add('blinkTwo', [0]);
+                blinkTwo.enableUpdate = true;
+                blinkTwo.onUpdate.add(onUpdate, this);
+                cardOne.animations.play('blinkTwo', 1, true);
+              
+                if (temp.length == 2) {
+                    if (temp[0] === temp[1]) {
+                        console.log(temp[0]);
+                        win++;
+                        console.log(winc + "hello");
+                        game.time.events.add(Phaser.Timer.SECOND * 1.5, destroyTump, this);
+                        temp.pop();
+                        temp.pop();
+                        console.log(temp);
+                        winc++;
+                    } else {
+
+                        temp.pop();
+                        temp.pop();
+                    }
+                }
+                });
+                //flute
+                cardTwo.events.onInputDown.add(function (b) {
+                    temp.push(b.number); console.log(b.number);
+                    var FrontTwo = cardTwo.animations.add('FrontTwo', [0]);
+                    FrontTwo.enableUpdate = true;
+                    cardTwo.animations.play('FrontTwo', 1, true);
+
+                    if (temp.length == 2) {
+                        if (temp[0] === temp[1]) {
+                            console.log(temp[0]);
+                            win++;
+                            console.log(winc + "hello");
+                            game.time.events.add(Phaser.Timer.SECOND * 1.5, fadePicture, this);
+                            temp.pop();
+                            temp.pop();
+                            console.log(temp);
+                            winc++;
+                            console.log(winc);
+                        } else {
+
+                            temp.pop();
+                            temp.pop();
+                        }
+                    }
+
+                });
+
+                cardTen.events.onInputDown.add(function (c) {
+                    temp.push(c.number); console.log(c.number);
+                //trumpt word
+                    var backTen = cardTen.animations.add('backTen', [0]);
+                    backTen.enableUpdate = true;
+                     backTen.onUpdate.add(onUpdate, this);
+                    cardTen.animations.play('backTen', 1, true);
+                    console.log(temp);
+                    if (temp.length == 2) {
+                        if (temp[0] === temp[1]) {
+                            console.log(temp[0]);
+                            win++;
+                            console.log(winc + "hello");
+                            game.time.events.add(Phaser.Timer.SECOND * 1.5, destroyTump, this);
+                            temp.pop();
+                            temp.pop();
+                            console.log(temp);
+                            winc++;
+                        } else {
+                            cardTen.frame = 1;
+
+                            temp.pop();
+                            temp.pop();
+                        }
+                    }
+                   
+                });
+                cardEleven.events.onInputDown.add(function (d) {
+                    temp.push(d.number); console.log(d);
+                    
+                    var backflutetwo = cardEleven.animations.add('backflutetwo', [0]);
+                    backflutetwo.enableUpdate = true;
+                    backflutetwo.onUpdate.add(onUpdate, this);
+                    winc++;
+                    cardEleven.animations.play('backflutetwo', 1, true);
+                    if (temp.length == 2) {
+                        if (temp[0] === temp[1]) {
+                            console.log(temp[0]);
+                            win++;
+                            console.log(winc + "hello");
+                    
+                            temp.pop();
+                            temp.pop();
+
+                            console.log(temp);
+                            game.time.events.add(Phaser.Timer.SECOND * 1.5, fadePicture, this);
+                           // cardEleven.destroy();
+                            //cardTwo.destroy();
+                        } else {
+                         
+                        temp.pop();
+                            temp.pop();
+                        }
+                    }
+                });
+                
+                
+                console.log(winc);
+            }
+           // if (temp.length == 2) {
+             //   if (temp[0] === temp[2]) {
+                //    console.log(temp[0]);
+                  //  win++;
+                    //console.log(winc +"hello");
+                   
+                    
+                //}
+                //else {
+                //    temp.pop();
+                  //  temp.pop();
+                //}
+            
+        }
+        function fadePicture() {
+            cardEleven.destroy();
+            cardTwo.destroy();
+        }
+        function destroyTump(){
+            cardTen.destroy();
+            cardOne.destroy();
+        }
         function onUpdate() {
-            count += 0.005;
+         //   count += 0.005;
 
-            cardOne.tileScale.x = 2 + Math.sin(count);
+           // cardOne.tileScale.x = 2 + Math.sin(count);
             
 
-            cardOne.tilePosition.x += 1;
+          //  cardOne.tilePosition.x += 1;
             
-            var hello;
+           // var hello;
         }
     </script>
 </body>
